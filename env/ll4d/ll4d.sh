@@ -16,9 +16,10 @@
 ##
 ## Author: Julen Larrucea
 
+IMAGE_NAME="ubuntu:16.04"
 CONTAINER_NAME="dev-lamp-server"
-LAMP_DIR=~/my_lxd_lamp
-MYSQL_PASSWORD="MyPass"
+LAMP_DIR=~/epics_lxd_lamp
+MYSQL_PASSWORD="password"
 
 echo -e "\033[0;32m ll4d: LXD LAMP FOR DEVELOPMENT  \033[0m"
 echo    " The quick script to build a LAMP test environment."
@@ -43,15 +44,15 @@ if ! which lxd > /dev/null ; then
     lxd init
 fi
 
-if ! lxc image list |grep ubuntu-trusty > /dev/null ; then
-    echo "Importing the ubuntu trusty image"
-    lxd-images import ubuntu trusty amd64 --sync --alias ubuntu-trusty
-fi
+#if ! lxc image list |grep ubuntu-trusty > /dev/null ; then
+#    echo "Importing the ubuntu trusty image"
+#    lxd-images import ubuntu trusty amd64 --sync --alias ubuntu-trusty
+#fi
 
 function create_lamp_container () {
 
     echo "Launching container with name $CONTAINER_NAME"
-    lxc launch ubuntu-trusty $CONTAINER_NAME
+    lxc launch $IMAGE_NAME $CONTAINER_NAME
 
     echo "Waiting until the container responds to ping."
     
